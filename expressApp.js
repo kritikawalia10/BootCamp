@@ -1,7 +1,7 @@
 const express = require('express');
 const chalk = require('chalk');
 const connectDB = require('./dbConnect');         
-const User = require('./userModel');      
+const userRoutes = require('./routes/User'); 
 
 const app = express();
 const PORT = 3000;
@@ -27,15 +27,7 @@ app.get('/about', (req, res) => {
   res.send('This is the About page.');
 });
 
-app.post('/users', async (req, res) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).json({ message: 'User created successfully!', user });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => {
   console.log(chalk.magenta(`🚀 Server is running on http://localhost:${PORT}`));
