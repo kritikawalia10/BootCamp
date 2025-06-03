@@ -8,6 +8,11 @@ const chalk = require('chalk');
 const app = express();
 const PORT = 3000;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 connectDB();
 
 app.use(express.json());
